@@ -33,7 +33,7 @@ if __name__ == "__main__":
             ws6 = Spell ( name = "Misty Step", game_class_id = 3, level = 2 )
             spells = [ fs1, fs2, ps1, ps2, ps3, ws1, ws2, ws3, ws4, ws5, ws6]
             for spell in spells:
-                db.session.add ( spells )
+                db.session.add ( spell )
             db.session.commit()
         
         print ( "Seeding Game Classes..." )
