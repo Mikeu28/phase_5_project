@@ -1,4 +1,4 @@
-from models import Game_Class#, Spell
+from models import Game_Class, Spell
 from faker import Faker
 from config import app, db
 
@@ -18,6 +18,9 @@ if __name__ == "__main__":
                 game_class = Game_Class(name = name)
                 db.session.add ( game_class )
             db.session.commit()
+        
+        def create_spells ():
+            s1 = Spell( name = "Second Wind", )
         
         print ( "Seeding Game Classes" )
         create_game_class()

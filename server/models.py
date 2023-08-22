@@ -37,7 +37,7 @@ class Character_Class ( db.Model, SerializerMixin ):
     __tablename__ = "character_class"
 
     id = db.Column ( db.Integer, primary_key = True )
-    classes_id = db.Column ( db.Integer,  db.ForeignKey( "game_class.id" ), nullable = False )
+    game_class_id = db.Column ( db.Integer,  db.ForeignKey( "game_class.id" ), nullable = False )
     character_id = db.Column ( db.Integer,  db.ForeignKey( "character.id" ), nullable = False )
     level = db.Column ( db.Integer, nullable = False )
     
@@ -65,7 +65,7 @@ class Spell ( db.Model, SerializerMixin ):
 
     id = db.Column ( db.Integer, primary_key = True )
     name = db.Column ( db.String, nullable = False )
-    classes_id = db.Column ( db.Integer, db.ForeignKey( "game_class.id" ), nullable = False )
+    game_class_id = db.Column ( db.Integer, db.ForeignKey( "game_class.id" ), nullable = False )
     level = db.Column ( db.Integer, nullable = False )
 
     #Relationships
