@@ -6,6 +6,8 @@ function CardContainer ( { data } ) {
     const [ level, setLevel ] = useState( 0 );
     const [ isOpen, setIsOpen ] = useState( false );
     const [ paladinLevel, setPaladinLevel ] = useState( 0 );
+    const [ wizardLevel, setWizardlevel ] = useState( 0 );
+    const [ figherLevel, setFighterLevel ] = useState( 0 )
 
 
 
@@ -14,15 +16,20 @@ function CardContainer ( { data } ) {
     };
 
     function handleLevel ( e ) {
-        if ( level < 12 ) {
-            setLevel(level + 1);
-            setIsOpen( false )
-        // } else {
-        //     setLevel( 0 )
-        //     setIsOpen( false )
-        }
-        if ( e.target.name === "Paladin") {
+        if ( e.target.name === "Paladin" && level < 12 ) {
+            setLevel( level + 1 )
             setPaladinLevel( paladinLevel + 1)
+            setIsOpen( false )
+        } else if ( e.target.name === "Wizard" && level < 12 ) {
+            setIsOpen( false )
+            setLevel( level + 1 )
+            setWizardlevel( wizardLevel + 1 )
+        } else if ( e.target.name === "Fighter" && level < 12 ) {
+            setIsOpen( false )
+            setLevel( level + 1 )
+            setFighterLevel( figherLevel + 1)
+        } else {
+            setIsOpen( false )
         }
 
         
@@ -38,10 +45,10 @@ function CardContainer ( { data } ) {
                 { data.map( (names) => <ClassCard handleLevel = { handleLevel } name = { names.name } key = { names.id } /> ) }
             </ReactModal>
             <p>Total Level: { level }</p>
-            <p>{paladinLevel > 0 ? `Paladin Level: ${ paladinLevel }` : null }</p>
+            <p>{ paladinLevel > 0 ? `Paladin Level: ${ paladinLevel }` : null }</p>
+            <p>{ figherLevel > 0 ? `Fighter Level: ${ figherLevel }` : null }</p>
+            <p>{ wizardLevel > 0 ? `Wizard Level: ${ wizardLevel }` : null }</p>
         </div>
-        // <button onClick = { data.map( (names) => <ClassCard name = { names.name } key = { names.id } /> ) } >+</button>
-        // <ul>{ data.map( (names) => <ClassCard name = { names.name } key = { names.id }/> ) }</ul>
     )
 };
 
