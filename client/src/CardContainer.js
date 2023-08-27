@@ -6,10 +6,29 @@ function CardContainer ( { data } ) {
     const [ level, setLevel ] = useState( 0 );
     const [ isOpen, setIsOpen ] = useState( false );
     const [ paladinLevel, setPaladinLevel ] = useState( 0 );
-    const [ wizardLevel, setWizardlevel ] = useState( 0 );
-    const [ figherLevel, setFighterLevel ] = useState( 0 )
+    const [ wizardLevel, setWizardLevel ] = useState( 0 );
+    const [ fighterLevel, setFighterLevel ] = useState( 0 )
 
+    function handleWizard () {
+        if (level < 12 ) {
+            setLevel( level + 1 )
+            setWizardLevel( wizardLevel + 1 )
+        }
+    }
 
+    function handlePaladin () {
+        if (level < 12 ) {
+            setLevel( level + 1 )
+            setPaladinLevel( paladinLevel + 1 )
+        }
+    }
+
+    function handleFighter () {
+        if (level < 12 ) {
+            setLevel( level + 1 )
+            setFighterLevel( fighterLevel + 1 )
+        }
+    }
 
     function handleClick () {
         setIsOpen( !isOpen )
@@ -23,16 +42,26 @@ function CardContainer ( { data } ) {
         } else if ( e.target.name === "Wizard" && level < 12 ) {
             setIsOpen( false )
             setLevel( level + 1 )
-            setWizardlevel( wizardLevel + 1 )
+            setWizardLevel( wizardLevel + 1 )
         } else if ( e.target.name === "Fighter" && level < 12 ) {
             setIsOpen( false )
             setLevel( level + 1 )
-            setFighterLevel( figherLevel + 1)
+            setFighterLevel( fighterLevel + 1)
         } else {
             setIsOpen( false )
         }
+    };
 
-        
+    const wizardStyle = {
+        display: wizardLevel > 0 ? 'block' : 'none'
+    };
+
+    const paladinStyle = {
+        display: paladinLevel > 0 ? 'block' : 'none'
+    };
+
+    const fighterStyle = {
+        display: fighterLevel > 0 ? 'block' : 'none'
     };
 
     return (
@@ -45,9 +74,9 @@ function CardContainer ( { data } ) {
                 { data.map( (names) => <ClassCard handleLevel = { handleLevel } name = { names.name } key = { names.id } /> ) }
             </ReactModal>
             <p>Total Level: { level }</p>
-            <p>{ paladinLevel > 0 ? `Paladin Level: ${ paladinLevel }` : null }</p>
-            <p>{ figherLevel > 0 ? `Fighter Level: ${ figherLevel }` : null }</p>
-            <p>{ wizardLevel > 0 ? `Wizard Level: ${ wizardLevel }` : null }</p>
+            <p>{ paladinLevel > 0 ? `Paladin Level: ${ paladinLevel }` : null } <button style={ paladinStyle } onClick = { handlePaladin }>Paladin Level +</button> </p>
+            <p>{ fighterLevel > 0 ? `Fighter Level: ${ fighterLevel }` : null } <button style={ fighterStyle } onClick = { handleFighter }>Fighter Level +</button> </p>
+            <p>{ wizardLevel > 0 ? `Wizard Level: ${ wizardLevel }` : null } <button style={ wizardStyle } onClick = { handleWizard }>Wizard Level +</button> </p>
         </div>
     )
 };
