@@ -57,9 +57,6 @@ class Game_Class ( db.Model, SerializerMixin ):
     character_classes = db.relationship ( "Character_Class", back_populates = "game_class" )
     characters = association_proxy ( "character_class", "character" )
 
-    
-
-
 class Spell ( db.Model, SerializerMixin ):
     __tablename__ = "spell"
 
