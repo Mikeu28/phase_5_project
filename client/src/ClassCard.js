@@ -1,8 +1,9 @@
 import React from 'react';
 
-function ClassCard ( { name } ) {
+function ClassCard ( { name, handleLevel } ) {
+
     return (
-        <button>Name: {name} </button>
+        <button name = { name } onClick = { handleLevel }>{name}</button>
     )
 }
 
