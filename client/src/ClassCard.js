@@ -1,22 +1,9 @@
-import React, { useState } from 'react';
-import ReactModal from 'react-modal';
+import React from 'react';
 
 function ClassCard ( { name } ) {
-
-    const [ isOpen, setIsOpen ] = useState( false );
-
     return (
-        <div>
-            <button onClick = { () => setIsOpen( true ) }>Name: {name} </button>
-            <ReactModal
-                isOpen = { isOpen }
-                contentLabel = "Test"
-                onRequestClose = { () => setIsOpen( false ) }
-                >
-                    { name }
-                </ReactModal>
-        </div>
-    ) ;
+        <button>Name: {name} </button>
+    )
 }
 
 export default ClassCard;
