@@ -2,9 +2,7 @@ import React from 'react';
 
 function ClassCard ( { name } ) {
     return (
-        <li>
-            <p>Name: {name}</p>
-        </li>
+        <button>Name: {name} </button>
     )
 }
 

@@ -12,7 +12,7 @@ if __name__ == "__main__":
         print ( "Starting seed..." )
 
         def create_game_class ():
-            class_names = [ "Fighter", "Paladin", "Wizard" ]
+            class_names = [ "Fighter", "Paladin", "Wizard", "Ranger", "Monk", "Warlock", "Rogue", ]
             sorted_name = sorted(class_names)
             for name in sorted_name:
                 game_class = Game_Class(name = name)
