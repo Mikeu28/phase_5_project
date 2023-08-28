@@ -1,6 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from config import db, metadata
+from sqlalchemy.orm import validates
 
 metadata = metadata
 db = db
@@ -16,6 +17,38 @@ class User ( db.Model, SerializerMixin ):
     #Relationships
 
     characters = db.relationship ( "Character", back_populates = "user" )
+
+    #Validations
+
+    @validates( "username" )
+    def validates_username(self, key, new_username):
+        if not new_username:
+            raise ValueError("A username must be provided")
+        elif len(new_username) > 20:
+            raise ValueError("A username must be shorter than 20 characters")
+        else: 
+            return new_username
+    
+    @validates( "password" )
+    def validates_password(self, key, new_password):
+        if not new_password:
+            raise ValueError("Please set a password")
+        has_letter = False
+        has_number = False
+
+        for char in new_password:
+            if char.isalpha():
+                has_letter = True
+            elif char.isdigit():
+                has_number = True
+
+            if has_letter and has_number:
+                break
+            
+        if not (has_letter and has_number):
+            raise ValueError("Password must contain at least one letter AND at least one number")
+        
+        return new_password
 
 class Character ( db.Model, SerializerMixin ):
     __tablename__ = "character"
