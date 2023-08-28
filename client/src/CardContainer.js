@@ -10,7 +10,6 @@ function CardContainer ( { data } ) {
 
     function handleClick () {
         setIsOpen( !isOpen )
-        console.log(classLevel)
     };
 
     function handleLevel ( e ) {
