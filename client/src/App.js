@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import './styling/App.css';
 import CardContainer from './CardContainer';
 
 function App() {
@@ -13,7 +12,7 @@ function App() {
   }, [] )
 
   return (
-    <div className="App">
+    <div>
       <CardContainer data = { formData }/>
     </div>
   );
