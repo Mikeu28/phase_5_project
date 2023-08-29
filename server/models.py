@@ -1,6 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
-from config import db, metadata, bcrypt
+from config import db, metadata, flask_bcrypt
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 
@@ -32,12 +32,12 @@ class User ( db.Model, SerializerMixin ):
     
     @password_hash.setter
     def password_hash ( self, password ):
-        password_hash = bcrypt.generate_password_hash(
+        password_hash = flask_bcrypt.generate_password_hash(
             password.encode( 'utf-8' ))
         self._password_hash = password_hash.decode( 'utf-8' )
     
     def authenticate ( self, password ):
-        return bcrypt.check_password_hash(
+        return flask_bcrypt.check_password_hash(
             self._password_hash, password.encode( 'utf-8' ))
 
 

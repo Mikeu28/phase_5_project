@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
 import CardContainer from './CardContainer';
+import Navbar from "./Navbar";
+
 
 function App() {
   
@@ -13,6 +15,7 @@ function App() {
 
   return (
     <div>
+      <Navbar/>
       <CardContainer data = { formData }/>
     </div>
   );

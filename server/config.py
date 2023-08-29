@@ -22,4 +22,4 @@ db.init_app(app)
 
 api = Api(app)
 CORS(app)
-bcrypt = Bcrypt(app)
+flask_bcrypt = Bcrypt(app)
