@@ -1,7 +1,8 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
-from config import db, metadata
+from config import db, metadata, bcrypt
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.hybrid import hybrid_property
 
 metadata = metadata
 db = db
@@ -11,14 +12,10 @@ class User ( db.Model, SerializerMixin ):
 
     id = db.Column ( db.Integer, primary_key = True )
     username = db.Column ( db.String, nullable = False, unique = True)
-    password = db.Column ( db.String, nullable = False )
+    _password_hash = db.Column ( db.String, nullable = False )
     profile_picture = db.Column ( db.String )
 
-    #Relationships
-
     characters = db.relationship ( "Character", back_populates = "user" )
-
-    #Validations
 
     @validates( "username" )
     def validates_username(self, key, new_username):
@@ -29,26 +26,21 @@ class User ( db.Model, SerializerMixin ):
         else: 
             return new_username
     
-    @validates( "password" )
-    def validates_password(self, key, new_password):
-        if not new_password:
-            raise ValueError("Please set a password")
-        has_letter = False
-        has_number = False
+    @hybrid_property
+    def password_hash ( self ):
+        return self._password_hash
+    
+    @password_hash.setter
+    def password_hash ( self, password ):
+        password_hash = bcrypt.generate_password_hash(
+            password.encode( 'utf-8' ))
+        self._password_hash = password_hash.decode( 'utf-8' )
+    
+    def authenticate ( self, password ):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode( 'utf-8' ))
 
-        for char in new_password:
-            if char.isalpha():
-                has_letter = True
-            elif char.isdigit():
-                has_number = True
 
-            if has_letter and has_number:
-                break
-            
-        if not (has_letter and has_number):
-            raise ValueError("Password must contain at least one letter AND at least one number")
-        
-        return new_password
 
 class Character ( db.Model, SerializerMixin ):
     __tablename__ = "character"
