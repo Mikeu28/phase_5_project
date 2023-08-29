@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import CardContainer from './CardContainer';
-import Navbar from "./Navbar";
+import Signup from "./Signup"
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 
 function App() {
@@ -15,14 +16,15 @@ function App() {
 
   return (
     <div>
-      <Navbar/>
-      <CardContainer data = { formData }/>
+      <BrowserRouter>
+        <Routes>
+          <Route path = "/Home" element = { <CardContainer data = { formData }/> } />
+          <Route path = "/Signup" element = { <Signup/> } />
+          <Route path = "*" element = { <Navigate to = "Home" replace /> } />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
-
-
-
-
 
 export default App;
