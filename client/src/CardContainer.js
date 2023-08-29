@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import ClassSelection from './ClassSelection.js'
+import Navbar from "./Navbar";
 import ClassCard from './ClassCard'
 
 function CardContainer ( { data } ) {
@@ -22,6 +23,7 @@ function CardContainer ( { data } ) {
 
     return (
         <div>
+            <Navbar/>
             <button onClick = { handleClick }>+</button>
             <ReactModal
                 isOpen = { isOpen }
