@@ -1,5 +1,5 @@
 from config import app, db, api, flask_bcrypt
-from flask import request, make_response
+from flask import request, make_response, session
 from flask_restful import Resource
 from models import Game_Class, Spell, User
 
@@ -27,8 +27,8 @@ class Users ( Resource ):
             return make_response( { "errors" : [ str( v_error ) ] }, 400 )
         
         db.session.add( user )
-        
         db.session.commit()
+        session['user_id'] = user.id
 
         return make_response(user.to_dict(), 201)
 
@@ -53,20 +53,25 @@ class UserLogin ( Resource ):
     
     def post ( self ):
         data = request.get_json()
-        username = data.get( 'username' )
-        password = data.get( '_password_hash' )
+        try:
+            user = User.query.filter_by( name = data[ 'name' ] ).first()
+            if user.authenticate( data[ 'password' ] ):
+                session[ 'user_ud' ] = user.id
+                response = make_response( user.to_dict(), 200 )
+                return response
+        except:
+            return make_response( { 'error': 'Name or password is incorrect' }, 401 )
 
-        if not username or not password:
-            return { "message": "Invalid username or password" }, 400
-        
-        user = User.query.filter_by( username = username ).first()
 
-        if user and user._password_hash == password:
-            return { "message": "Login successful", "user_id": user.id }, 200
-        else:
-            return { "message": "Invalid username or password" }, 401
-    
 api.add_resource( UserLogin, "/api/login" )
+
+class UserLogout ( Resource ):
+    
+    def delete ( self ):
+        session[ 'user_id' ] = None
+        return make_response( '', 204 )
+    
+api.add_resource( UserLogout, "/api/logout" )
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
