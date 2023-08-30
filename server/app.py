@@ -27,6 +27,7 @@ class Users ( Resource ):
             return make_response( { "errors" : [ str( v_error ) ] }, 400 )
         
         db.session.add( user )
+        
         db.session.commit()
 
         return make_response(user.to_dict(), 201)

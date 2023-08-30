@@ -31,10 +31,11 @@ class User ( db.Model, SerializerMixin ):
         return self._password_hash
     
     @password_hash.setter
-    def password_hash ( self, password ):
-        password_hash = flask_bcrypt.generate_password_hash(
-            password.encode( 'utf-8' ))
-        self._password_hash = password_hash.decode( 'utf-8' )
+    def password_hash ( self, new_password_string ):
+        byte_object = new_password_string.encode( 'utf-8' )
+        encrypted_hash_object = flask_bcrypt.generate_password_hash( byte_object )
+        hash_object_as_string = encrypted_hash_object.decode( 'utf-8' )
+        self._password_hash = hash_object_as_string
     
     def authenticate ( self, password ):
         return flask_bcrypt.check_password_hash(
