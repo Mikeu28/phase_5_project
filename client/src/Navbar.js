@@ -7,8 +7,9 @@ function Navbar () {
     return (
         <nav>
             <div>
-                <NavLink exact to = "/Home">Home</NavLink>
-                <NavLink exact to = "/Signup">Sign Up</NavLink>
+                <NavLink to = "/Home">Home</NavLink>
+                <NavLink to = "/Signup">Sign Up</NavLink>
+                <NavLink to = "/Login">Log In</NavLink>
             </div>
         </nav>
     )
